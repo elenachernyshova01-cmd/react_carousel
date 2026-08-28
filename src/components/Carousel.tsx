@@ -16,15 +16,30 @@ const Carousel: React.FC<Props> = ({
   frameSize = 3,
   step = 3,
   animationDuration = 1000,
+  infinite = false,
 }) => {
   const [position, setPosition] = React.useState(0);
   const handleNext = () => {
     const maxPosition = images.length - frameSize;
 
+    if (infinite && position >= maxPosition) {
+      setPosition(0);
+
+      return;
+    }
+
     setPosition(Math.min(position + step, maxPosition));
   };
 
   const handlePrev = () => {
+    const maxPosition = images.length - frameSize;
+
+    if (infinite && position === 0) {
+      setPosition(maxPosition);
+
+      return;
+    }
+
     setPosition(Math.max(position - step, 0));
   };
 
